@@ -5,8 +5,11 @@ Proyecto de FINGESO aplicación SICOMPA para la gestión de gastos comunes
 # COMO EJECUTAR FRONTEND
 
 cd frontendSICOMPA
+
 npm install
+
 npm run format
+
 npm run dev
 
 # COMO EJECUTAR BACKEND
