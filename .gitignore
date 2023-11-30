@@ -1,0 +1,77 @@
+####################################
+#### GITIGNORE PROYECTO BACKEND ####
+####################################
+
+backendSICOMPA/HELP.md
+backendSICOMPA/.gradle
+backendSICOMPA/build/
+!backendSICOMPA/gradle/wrapper/gradle-wrapper.jar
+!backendSICOMPA/**/src/main/**/build/
+!backendSICOMPA/**/src/test/**/build/
+
+### STS ###
+backendSICOMPA/.apt_generated
+backendSICOMPA/.classpath
+backendSICOMPA/.factorypath
+backendSICOMPA/.project
+backendSICOMPA/.settings
+backendSICOMPA/.springBeans
+backendSICOMPA/.sts4-cache
+backendSICOMPA/bin/
+!backendSICOMPA/**/src/main/**/bin/
+!backendSICOMPA/**/src/test/**/bin/
+
+### IntelliJ IDEA ###
+backendSICOMPA/.idea
+backendSICOMPA/*.iws
+backendSICOMPA/*.iml
+backendSICOMPA/*.ipr
+backendSICOMPA/out/
+!backendSICOMPA/**/src/main/**/out/
+!backendSICOMPA/**/src/test/**/out/
+
+### NetBeans ###
+/backendSICOMPA/nbproject/private/
+/backendSICOMPA/nbbuild/
+/backendSICOMPA/dist/
+/backendSICOMPA/nbdist/
+/backendSICOMPA/.nb-gradle/
+
+### VS Code ###
+backendSICOMPA/.vscode/
+
+
+#####################################
+#### GITIGNORE PROYECTO FRONTEND ####
+#####################################
+
+
+# Logs
+frontendSICOMPA/logs
+frontendSICOMPA/*.log
+frontendSICOMPA/npm-debug.log*
+frontendSICOMPA/yarn-debug.log*
+frontendSICOMPA/yarn-error.log*
+frontendSICOMPA/pnpm-debug.log*
+frontendSICOMPA/lerna-debug.log*
+
+frontendSICOMPA/node_modules
+frontendSICOMPA/.DS_Store
+frontendSICOMPA/dist
+frontendSICOMPA/dist-ssr
+frontendSICOMPA/coverage
+frontendSICOMPA/*.local
+
+/frontendSICOMPA/cypress/videos/
+/frontendSICOMPA/cypress/screenshots/
+
+# Editor directories and files
+frontendSICOMPA/.vscode/*
+!frontendSICOMPA/.vscode/extensions.json
+frontendSICOMPA/.idea
+frontendSICOMPA/*.suo
+frontendSICOMPA/*.ntvs*
+frontendSICOMPA/*.njsproj
+frontendSICOMPA/*.sln
+frontendSICOMPA/*.sw?
+
