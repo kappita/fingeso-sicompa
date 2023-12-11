@@ -36,7 +36,9 @@ public class UserService {
 
     @ResponseBody
 
+    // Registra un usuario en el sistema
     public ResponseEntity<User> register(User user) {
+        // Verifica que no exista un usuario con ese correo
         Optional<User> req = userEntityManager.findByEmail(user.getEmail());
         if (req.isPresent()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
@@ -47,14 +49,16 @@ public class UserService {
 
     }
 
+    // Inicia la sesión de un usuario
     public ResponseEntity<LoginResponse> login(LoginForm form) {
+        // Confirma que el correo y la contraseña sean válidas
         Optional<User> req = userEntityManager.findByEmailAndPassword(form.getEmail(), form.getPassword());
         if (req.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
 
         User u = req.get();
-
+        // Obtiene las residencias y administraciones del usuario
         List<Resident> resReq = residentManager.findAllByUser(u.getId());
         List<Admin> adminReq = adminManager.findAllByUser(u.getId());
 

@@ -19,7 +19,9 @@ public class ChargeService {
     @Autowired
     AdminService adminService;
 
+    // Agrega un gasto a una comunidad con el form correspondiente
     public ResponseEntity<Charge> addCharge(AddChargeForm form) {
+        // Verifica que el admin corresponda a la comunidad
         if (!adminService.checkCredentials(form.getEmail(),
                                            form.getPassword(),
                                            form.getCharge().getCommunity_id())) {

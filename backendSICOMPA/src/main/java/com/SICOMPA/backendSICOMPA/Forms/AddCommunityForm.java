@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
+// Formulario para agregar una comunidad
 public class AddCommunityForm {
     private String email;
     private String password;

@@ -22,14 +22,16 @@ public class AdminService {
     CommunityEntityManager communityManager;
 
     @ResponseBody
-
+    // Agrega un administrador al la base de datos
     public ResponseEntity<Admin> addAdmin(Admin admin) {
+        // Revisa que el usuario no esté administrando otra comunidad
         Optional<Admin> req = adminManager.findExistingAdmin(admin.getUser_id());
         if (req.isPresent()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
         return ResponseEntity.ok(adminManager.save(admin));
     }
+    // Verifica si un admin corresponde a una comunidad
     public boolean checkCredentials(String email, String password, Long community_id) {
         Optional<Admin> req = adminManager.findAdminByEmailAndPassword(email, password);
         if (req.isEmpty()) {

@@ -10,6 +10,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
+// Objeto de respuesta de un inicio de sesión
 public class LoginResponse {
     private User user;
     private List<Resident> residents;

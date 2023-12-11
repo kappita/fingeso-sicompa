@@ -30,29 +30,32 @@ public class CommunityService {
     AdminEntityManager adminEntityManager;
 
 
+    // Crea una comunidad, no hay restricciones ya que el id es autoincrementado
     @ResponseBody
     public ResponseEntity<Community> createCommunity(Community community) {
         return ResponseEntity.ok(communityEntityManager.save(community));
     }
 
+    // Obtiene todos los egresos/gastos de la comunidad
     public ResponseEntity<List<Charge>> getCommunityCharges(Long community_id) {
         List<Charge> pendingCharges = chargeEntityManager.findPendingChargesOfCommunity(community_id);
         return ResponseEntity.ok(pendingCharges);
     }
 
-
+    // Calcula la cuota correspondiente al mes de una comunidad
     public float calculateQuota(Long community_id) {
         List<Charge> pendingCharges = chargeEntityManager.findPendingChargesOfCommunity(community_id);
         float total = 0;
         // Provisorio: Arreglar query SQL para no tener que calcular
         //             pagos correspondientes al mes en servicio
+        // Agrega al total sólo los egresos pendientes por cuota o mes
         for (Charge c: pendingCharges) {
             LocalDate c_date = c.getCreation_date();
             LocalDate current_date = LocalDate.now();
             int charge_months = c_date.getMonthValue() + c_date.getYear() * 12 + c.getDues();
             int current_months = current_date.getMonthValue() + current_date.getYear() * 12;
 
-
+            // Divide por la cantidad de cuotas
             if (current_months < charge_months) {
                 total += (float) c.getAmount() / c.getDues();
             }
@@ -62,11 +65,13 @@ public class CommunityService {
         return total;
     }
 
+    // Calcula el total de M2 de una comunidad
     public int calculateTotalM2(Long community_id) {
         Optional<Community> community = communityEntityManager.findById(community_id);
         if (community.isEmpty()) {
             return -1;
         }
+        // Suma el total del edificio con la multiplicación de las existencias por su metraje
         Community comm = community.get();
         int total = comm.getTotal_m2();
         total += comm.getParking_m2() * comm.getTotal_parking_units();
@@ -76,6 +81,7 @@ public class CommunityService {
 
     }
 
+    // Calcula la proporción correspondiente a los m2 de un usuario
     public QuotaResponse calculateQuotaProportion(int resident_m2, Long community_id) {
 
         int totalM2 = calculateTotalM2(community_id);
