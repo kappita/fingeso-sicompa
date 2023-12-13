@@ -8,8 +8,6 @@ cd frontendSICOMPA
 
 npm install
 
-npm run format
-
 npm run dev
 
 # COMO EJECUTAR BACKEND
