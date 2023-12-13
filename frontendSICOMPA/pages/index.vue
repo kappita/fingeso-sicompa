@@ -4,8 +4,6 @@
      <v-col cols="12">
       <v-card class="logo py-4 d-flex justify-center">
         <SICOMPALogo />
-        
-
       </v-card>
     </v-col>
       <!-- <v-card> -->
@@ -156,6 +154,7 @@ export default {
           this.$router.push('/ruta-de-la-opcion-3');
           break;
       }
+
     }
     }
 }
@@ -164,9 +163,9 @@ export default {
 <style scoope >
 
 
-.logo {
- /*  background-color: #ffc872; */
-}
+/* .logo {
+   background-color: #ffc872; 
+} */
 
 .Todo {
   /* background-color: #ffdda6; */

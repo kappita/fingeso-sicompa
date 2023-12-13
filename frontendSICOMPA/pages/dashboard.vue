@@ -4,11 +4,18 @@
             <!-- Primer cuadrante -->
             <div class="card">
                 <div class="card-content">
-                    <h2>Diciembre</h2>
-                    <p>Su total a pagar es de : {{ monto }}</p>
+                  <p>Agregar un gasto: </p>
+                  <v-text-field  variant="underlined" v-model="username" label="Monto"></v-text-field>
+
+                  <v-text-field variant="underlined" v-model="password" label="Descripción"></v-text-field>
+                  <v-text-field variant="underlined" v-model="password" label="Fecha "></v-text-field>
+                  
+                   
+      
+
                     <v-form fast-fail @submit.prevent="pagar">
 
-                        <v-btn type="submit" variant="outlined" color="#31B189" block class="mt-2">Pagar</v-btn>
+                        <v-btn type="submit" variant="outlined" color="#31B189" block class="mt-2">Subbir</v-btn>
 
                     </v-form>
 
@@ -20,7 +27,7 @@
             <div class="card">
                 <div class="card-content">
                     <h2>Estadísticas </h2>
-                    <p>Lorem ipsum dolor sit amet. A sint dolores 33 exercitationem galisum et similique odio
+                    <p>
                         <img
                             src="../static/estadisticas.png"
                             alt="Vuetify.js"
@@ -36,7 +43,7 @@
             <div class="card">
                 <div class="card-content">
                     <h2>Información </h2>
-                    <p>Lorem ipsum dolor sit amet. A sint dolores 33 exercitationem galisum et similique odio
+                    <p>
                         <img
                             src="../static/estadisticas.png"
                             alt="Vuetify.js"
@@ -63,7 +70,7 @@
         layout: 'usuarioLayout',
         data() {
             return {
-                monto: 0,
+                monto: 50000,
             };
         },
        /*  mounted() {

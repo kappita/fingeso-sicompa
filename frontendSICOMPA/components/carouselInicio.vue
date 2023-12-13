@@ -14,17 +14,9 @@
         return {
           items: [
             {
-              src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg' ,
+              src: 'https://concepto.de/wp-content/uploads/2013/03/comunidad-1-800x422.jpeg',
             },
-            {
-              src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
-            },
-            {
-              src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
-            },
-            {
-              src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
-            },
+            
           ],
         }
       },

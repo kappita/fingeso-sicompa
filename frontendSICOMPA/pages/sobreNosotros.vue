@@ -3,7 +3,7 @@
         
         <div class="container">
             <img
-            src="../static/grupoo.jpg"
+            src="../static/grupoo.jpeg"
             alt="Vuetify.js"
             class="mb-5"
             />

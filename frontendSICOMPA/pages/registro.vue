@@ -28,7 +28,7 @@
 
                     <!-- REDIRIGIR A PÁGINA PARA PREGUNTAR CORREO -->
   
-                    <v-btn type="submit" variant="outlined" color="#31B189" block class="mt-2">Crear cuenta</v-btn>
+                    <v-btn type="submit" variant="outlined" color="#ffdda6" block class="mt-2">Crear cuenta</v-btn>
   
                 </v-form>
                 
@@ -110,6 +110,7 @@
   </template>
   
   <script>
+  //import axios from 'axios';
   import SICOMPALogo from '../components/SICOMPALogo.vue';
   import carouselInicio from '../components/carouselInicio.vue';
   
@@ -130,11 +131,17 @@
         ]
           };
       },
+      computed:{
+        isvalid(){
+          return this.username != '' && this.password != ''
+        }
+      },
+      /* login(){
+              this.$router.push('/dashboard'); */
       methods: {
-          login(){
-              this.$router.push('/dashboard');
-          },
-          redireccionar(){
+          
+            
+      redireccionar(){
             switch (this.selectedOption) {
           case 'opcion1':
             this.$router.push('/dashboard');
@@ -146,16 +153,15 @@
             this.$router.push('/ruta-de-la-opcion-3');
             break;
         }
-      }
-      }
-  }
+      }}
+    }
   </script>
   
   <style scoope >
   
   
   .logo {
-   /*  background-color: #ffc872; */
+    background-color: #31B189;
   }
   
   .Todo {
@@ -165,7 +171,7 @@
   }
   
   .login {
-    background-color: #ffdda6;
+    background-color: #31B189;
     border-color: white ;
     border-radius: 5%;
     padding-left: 10%;
