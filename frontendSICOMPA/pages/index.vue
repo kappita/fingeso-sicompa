@@ -120,6 +120,7 @@
 <script>
 import SICOMPALogo from '../components/SICOMPALogo.vue';
 import carouselInicio from '../components/carouselInicio.vue';
+import axios from "axios"
 
 
 export default {
@@ -139,7 +140,10 @@ export default {
         };
     },
     methods: {
-        login(){
+        async login(){
+            axios.get("https://catfact.ninja/fact").then((c) => {
+              console.log(c.data)
+            })
             this.$router.push('/dashboard');
         },
         redireccionar(){
