@@ -1,16 +1,24 @@
 package com.SICOMPA.backendSICOMPA.Service;
 
 
+import com.SICOMPA.backendSICOMPA.Entity.Admin;
 import com.SICOMPA.backendSICOMPA.Entity.Community;
 import com.SICOMPA.backendSICOMPA.Entity.Resident;
+import com.SICOMPA.backendSICOMPA.Entity.User;
 import com.SICOMPA.backendSICOMPA.EntityManager.CommunityEntityManager;
 import com.SICOMPA.backendSICOMPA.EntityManager.ResidentEntityManager;
+import com.SICOMPA.backendSICOMPA.EntityManager.UserEntityManager;
+import com.SICOMPA.backendSICOMPA.Forms.LoginForm;
 import com.SICOMPA.backendSICOMPA.Responses.QuotaResponse;
+import com.SICOMPA.backendSICOMPA.Responses.ResidentLoginResponse;
+import com.SICOMPA.backendSICOMPA.Responses.ResidentWithQuota;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,6 +32,34 @@ public class ResidentService {
 
     @Autowired
     CommunityService communityService;
+
+    @Autowired
+    UserEntityManager userManager;
+
+    // Inicia la sesión de un usuario
+    public ResponseEntity<ResidentLoginResponse> login(LoginForm form) {
+        // Confirma que el correo y la contraseña sean válidas
+        Optional<User> req = userManager.findByEmailAndPassword(form.getEmail(), form.getPassword());
+        if (req.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        User u = req.get();
+        // Obtiene las residencias y administraciones del usuario
+        List<Resident> resReq = residentManager.findAllByUser(u.getId());
+        List<ResidentWithQuota> resQuotas = new ArrayList<>() {
+        };
+        for (Resident res: resReq) {
+            QuotaResponse quota = getResidentQuota(res.getId());
+            resQuotas.add(new ResidentWithQuota(res, quota));
+            
+        }
+
+        ResidentLoginResponse response = new ResidentLoginResponse(u, resQuotas);
+        return ResponseEntity.ok(response);
+
+
+    }
 
     // Agrega un residente a la base de datos
     public ResponseEntity<Resident> createResident(Resident resident) {
@@ -49,17 +85,17 @@ public class ResidentService {
     }
 
     // Obtiene la cuota de gastos comunes correspondiente a un residente
-    public ResponseEntity<QuotaResponse> getResidentQuota(Long resident_id) {
+    public QuotaResponse getResidentQuota(Long resident_id) {
         // Comprueba que le residente exista
         Optional<Resident> req = residentManager.findById(resident_id);
         if (req.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return null;
         }
         // No deberían existir residentes sin comunidad
         Resident resident = req.get();
         Long community_id = resident.getCommunity_id();
-        QuotaResponse response = communityService.calculateQuotaProportion(getResidentTotalM2(resident), community_id);
-        return ResponseEntity.ok(response);
+        QuotaResponse quota = communityService.calculateQuotaProportion(getResidentTotalM2(resident), community_id);
+        return quota;
     }
 
     // Obtiene los M2 totales utilizados por un residente
@@ -72,6 +108,8 @@ public class ResidentService {
 
         return total;
     }
+
+
 
 
 }

@@ -143,6 +143,7 @@
 <script>
 import SICOMPALogo from '../components/SICOMPALogo.vue';
 import carouselInicio from '../components/carouselInicio.vue';
+import axios from "axios"
 
 
 export default {
@@ -165,6 +166,7 @@ export default {
         };
     },
     methods: {
+
       iniciarSesion() {
       // Dependiendo del valor de rolSeleccionado, redirigir a diferentes rutas
       switch (this.rolSeleccionado) {
