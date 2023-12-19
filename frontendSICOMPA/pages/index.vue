@@ -20,8 +20,8 @@
           <div class="d-flex align-center justify-center" style="height: 50vh">
             <div class ="registro">
               <v-sheet class="mx-auto" v-bind:class="responsiveWidth">
-              <v-form fast-fail @submit.prevent="getData">
-                  <v-text-field  variant="underlined" v-model="username" label="Correo electrónico"></v-text-field>
+              <v-form fast-fail @submit.prevent="login">
+                  <v-text-field  variant="underlined" v-model="email" label="Correo electrónico"></v-text-field>
 
                   <v-text-field variant="underlined" v-model="password" label="Contraseña"></v-text-field>
                   <br>
@@ -73,6 +73,7 @@
 <script>
 import SICOMPALogo from '../components/SICOMPALogo.vue';
 import carouselInicio from '../components/carouselInicio.vue';
+import {store} from "../store/store"
 
 
 export default {
@@ -95,9 +96,42 @@ export default {
         };
     },
     methods: {
-      getData: async function() {
-        let response = await this.$axios.get('http://icanhazip.com')
-        console.log(response)
+      login: async function() {
+        const data = {
+          email: this.email,
+          password: this.password
+        }
+        let response;
+        switch (this.rolSeleccionado) {
+          case 'residente':
+            console.log(data)
+            response = this.$axios.post('http://localhost:8080/resident/login', data).then( e=> {
+              console.log(e.data.user.username)
+              store.username = e.data.user.username
+              store.quota = e.data.residents[0].quota.resident_quota
+              store.community_quota = e.data.residents[0].quota.community_quota
+              store.usage_percentage = e.data.residents[0].quota.usage_percentage
+              console.log(response)
+            this.redireccionar('/dashboard')
+            })
+            break;
+
+          case 'administrador':
+            response = this.$axios.post('http://localhost:8080/admin/login', data).then( e=> {
+            console.log(e.data.user.username)
+            store.username = e.data.user.username
+            store.email = e.data.user.email
+            store.password = e.data.user.password
+            store.community_id = e.data.admins[0].community_id
+
+            console.log(response)
+            this.redireccionar('/admin')
+            })
+            break;
+            
+          
+        }
+        
       },
 
       iniciarSesion() {

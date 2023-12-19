@@ -4,18 +4,16 @@
             <!-- Primer cuadrante -->
             <div class="card">
                 <div class="card-content">
-                  <p>Agregar un gasto: </p>
-                  <v-text-field  variant="underlined" v-model="username" label="Monto"></v-text-field>
-
-                  <v-text-field variant="underlined" v-model="password" label="Descripción"></v-text-field>
-                  <v-text-field variant="underlined" v-model="password" label="Fecha "></v-text-field>
-                  
-                   
-      
-
+                  <div>
+                    <h1>Bienvenido, {{ this.store.username }}</h1>
+                  </div>
+                  <h2>Diciembre</h2>
+                    <p>Su total a pagar es de : {{ this.store.quota }}</p>
+                    <p>Su porcentaje de uso su comunidad es: {{ this.store.usage_percentage }}</p>
+                    <p>El de su comunidad es: {{ this.store.community_quota  }}</p>
                     <v-form fast-fail @submit.prevent="pagar">
 
-                        <v-btn type="submit" variant="outlined" color="#31B189" block class="mt-2">Subbir</v-btn>
+                        <v-btn type="submit" variant="outlined" color="#31B189" block class="mt-2">Pagar</v-btn>
 
                     </v-form>
 
@@ -65,11 +63,14 @@
     </template>
     
     <script>
+    import {ref, onMounted} from "vue"
+    import { store } from "../store/store"
     
     export default{
         layout: 'usuarioLayout',
         data() {
             return {
+                store: store,
                 monto: 50000,
             };
         },
