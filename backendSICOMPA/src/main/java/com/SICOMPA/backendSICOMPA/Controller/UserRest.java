@@ -3,8 +3,7 @@ package com.SICOMPA.backendSICOMPA.Controller;
 
 import com.SICOMPA.backendSICOMPA.Entity.User;
 import com.SICOMPA.backendSICOMPA.Forms.LoginForm;
-import com.SICOMPA.backendSICOMPA.Forms.Test;
-import com.SICOMPA.backendSICOMPA.Responses.LoginResponse;
+import com.SICOMPA.backendSICOMPA.Responses.ResidentLoginResponse;
 import com.SICOMPA.backendSICOMPA.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +20,4 @@ public class UserRest {
         return userService.register(user);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginForm form) {
-        return userService.login(form);
-    }
 }
