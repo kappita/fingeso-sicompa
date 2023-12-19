@@ -8,14 +8,11 @@ import com.SICOMPA.backendSICOMPA.EntityManager.AdminEntityManager;
 import com.SICOMPA.backendSICOMPA.EntityManager.ResidentEntityManager;
 import com.SICOMPA.backendSICOMPA.EntityManager.UserEntityManager;
 import com.SICOMPA.backendSICOMPA.Forms.LoginForm;
-import com.SICOMPA.backendSICOMPA.Forms.Test;
-import com.SICOMPA.backendSICOMPA.Responses.LoginResponse;
+import com.SICOMPA.backendSICOMPA.Responses.ResidentLoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -49,24 +46,7 @@ public class UserService {
 
     }
 
-    // Inicia la sesión de un usuario
-    public ResponseEntity<LoginResponse> login(LoginForm form) {
-        // Confirma que el correo y la contraseña sean válidas
-        Optional<User> req = userEntityManager.findByEmailAndPassword(form.getEmail(), form.getPassword());
-        if (req.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
 
-        User u = req.get();
-        // Obtiene las residencias y administraciones del usuario
-        List<Resident> resReq = residentManager.findAllByUser(u.getId());
-        List<Admin> adminReq = adminManager.findAllByUser(u.getId());
-
-        LoginResponse response = new LoginResponse(u, resReq, adminReq);
-        return ResponseEntity.ok(response);
-
-
-    }
 
 
 }

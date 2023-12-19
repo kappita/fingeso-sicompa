@@ -1,6 +1,9 @@
 package com.SICOMPA.backendSICOMPA.Controller;
 
 import com.SICOMPA.backendSICOMPA.Entity.Admin;
+import com.SICOMPA.backendSICOMPA.Forms.LoginForm;
+import com.SICOMPA.backendSICOMPA.Responses.AdminLoginResponse;
+import com.SICOMPA.backendSICOMPA.Responses.ResidentLoginResponse;
 import com.SICOMPA.backendSICOMPA.Service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +18,11 @@ public class AdminController {
 
     @Autowired
     AdminService adminService;
+
+    @PostMapping("/login")
+    public ResponseEntity<AdminLoginResponse> login(@RequestBody LoginForm form) {
+        return adminService.login(form);
+    }
 
     @PostMapping("/addAdmin")
     public ResponseEntity<Admin> addAdmin(@RequestBody Admin admin) {
