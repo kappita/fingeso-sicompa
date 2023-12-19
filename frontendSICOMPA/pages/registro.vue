@@ -22,7 +22,7 @@
             <div class="d-flex align-center justify-center" style="height: 50vh">
             <v-sheet width="400" class="mx-autoo">
                 <v-form fast-fail @submit.prevent="login">
-                    <v-text-field  variant="underlined" v-model="username" label="Usuario"></v-text-field>
+                    <v-text-field  variant="underlined" v-model="username" label="Correo electronico"></v-text-field>
   
                     <v-text-field variant="underlined" v-model="password" label="Contraseña"></v-text-field>
 
@@ -124,11 +124,6 @@
               username: '',
               password: '',
               usuario: null,
-        opciones: [
-        { text: 'Residente', value: 'opcion1' },
-          { text: 'Administrador', value: 'opcion2' },
-          { text: 'Super Administrador', value: 'opcion3' },
-        ]
           };
       },
       computed:{
@@ -139,22 +134,28 @@
       /* login(){
               this.$router.push('/dashboard'); */
       methods: {
-          
-            
-      redireccionar(){
-            switch (this.selectedOption) {
-          case 'opcion1':
-            this.$router.push('/dashboard');
-            break;
-          case 'opcion2':
-            this.$router.push('/admin');
-            break;
-          case 'opcion3':
-            this.$router.push('/ruta-de-la-opcion-3');
-            break;
-        }
-      }}
+        async guardarEnBaseDeDatos() {
+      try {
+        // Realizar una solicitud POST a tu servidor/API para guardar los datos en la base de datos
+        const response = await axios.post('URL_DE_TU_API', {
+          username: this.username,
+          password: this.password,
+        });
+
+        // Si la solicitud fue exitosa y recibiste una respuesta del servidor
+        console.log('Datos guardados en la base de datos:', response.data);
+
+        // Puedes actualizar la variable usuario con los datos guardados, si es necesario
+        this.usuario = response.data;
+
+        // Realizar otras acciones después de guardar los datos, si es necesario
+      } catch (error) {
+        // Manejo de errores en caso de que la solicitud falle
+        console.error('Error al guardar en la base de datos:', error);
+      }
     }
+  }
+}
   </script>
   
   <style scoope >
