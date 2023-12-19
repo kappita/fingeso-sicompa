@@ -18,22 +18,42 @@
             ¡Inicia sesión para pagar tus gastos comunes, ver estadísticas y mucho más!
           </v-card-title>
           <div class="d-flex align-center justify-center" style="height: 50vh">
-          <v-sheet width="400" class="mx-autoo">
+            <div class ="registro">
+              <v-sheet class="mx-auto" v-bind:class="responsiveWidth">
               <v-form fast-fail @submit.prevent="login">
-                  <v-text-field  variant="underlined" v-model="username" label="Usuario"></v-text-field>
+                  <v-text-field  variant="underlined" v-model="username" label="Correo electrónico"></v-text-field>
 
                   <v-text-field variant="underlined" v-model="password" label="Contraseña"></v-text-field>
+                  <br>
+                      <br>
                   <!-- CAMBIAR EL MODELO!!! -->
-                  <v-select
+                <!--   <v-select
                       v-model="usuario"
                       :items="opciones"
                       label="Rol"
                       @change="redireccionar"
-                    ></v-select>
+                    ></v-select> -->
+
+
+
+                      <label for="tipo-usuario">Selecciona tu rol :  </label>
+                      <select v-model ="rolSeleccionado" name="tipo-usuario" id="tipo-usuario">
+                      <option value="residente">Residente </option>
+                      <option value="administrador">Administrador </option>
+                      <option value="superadministrador">Super administrador</option>
+                      </select>
+                      <br>
+                      <br>
+                      <br>
+
                   <!-- REDIRIGIR A PÁGINA PARA PREGUNTAR CORREO -->
                   <a href="#" class="text-body-2 font-weight-regular">¿Olvidaste tu contraseña?</a>
+                  <br>
+                      <br>
 
                   <v-btn type="submit" variant="outlined" color="#ffdda6" block class="mt-2">Iniciar Sesión</v-btn>
+                  <br>
+                      <br>
 
               </v-form>
               <div class="mt-2">
@@ -41,6 +61,9 @@
                   <p class="text-body-2">Si aún no tienes una cuenta, <a href="/registro">¡únetenos!</a></p>
               </div>
           </v-sheet>
+
+            </div>
+            
           </div>
 
         </div>
@@ -126,9 +149,12 @@ import axios from "axios"
 export default {
     name: 'IndexPage',
     layout: 'default',
-    components: { SICOMPALogo , carouselInicio },
+    components: { SICOMPALogo , carouselInicio }, 
+    
     data(){
         return{
+          rolSeleccionado: '',
+          responsiveWidth: 'xs12 sm8 md6',
             username: '',
             password: '',
             usuario: null,
@@ -140,28 +166,43 @@ export default {
         };
     },
     methods: {
-        async login(){
-            axios.get("https://catfact.ninja/fact").then((c) => {
-              console.log(c.data)
-            })
-            this.$router.push('/dashboard');
-        },
-        redireccionar(){
-          switch (this.selectedOption) {
-        case 'opcion1':
-          this.$router.push('/dashboard');
+
+      iniciarSesion() {
+      // Dependiendo del valor de rolSeleccionado, redirigir a diferentes rutas
+      switch (this.rolSeleccionado) {
+        case 'residente':
+          this.redireccionar('/ruta-para-residente');
           break;
-        case 'opcion2':
-          this.$router.push('/admin');
+        case 'administrador':
+          this.redireccionar('/ruta-para-administrador');
           break;
-        case 'opcion3':
-          this.$router.push('/ruta-de-la-opcion-3');
+        case 'superadministrador':
+          this.redireccionar('/ruta-para-superadmin');
+          break;
+        default:
+          // Manejar un caso por defecto si es necesario
           break;
       }
+    },
+    redireccionar(ruta) {
+      // Usar el enrutador de Vue Router para redirigir a la ruta especificada
+      this.$router.push({ path: ruta });
+    },
 
+    enviarRol() {
+      // Aquí puedes utilizar Axios para enviar el valor seleccionado a tu servidor o realizar alguna acción con él
+      axios.post('URL_DEL_SERVIDOR', { rol: this.rolSeleccionado })
+        .then(response => {
+          console.log('¡Valor enviado con éxito!', response.data);
+          // Aquí puedes manejar la respuesta del servidor si es necesario
+        })
+        .catch(error => {
+          console.error('Error al enviar el valor:', error);
+          // Manejo de errores, si es necesario
+        });
     }
-    }
-}
+  } 
+  }
 </script>
 
 <style scoope >
@@ -179,9 +220,10 @@ export default {
 
 .login {
   background-color: #31B189;
-  border-color: white ;
+  border-color: rgb(255, 255, 255) ;
   border-radius: 5%;
   padding-left: 10%;
+  padding-right: 10%;
   margin-left: 80px; /* Ajusta el valor según sea necesario */
   height: 80% ;
 
@@ -191,6 +233,8 @@ export default {
   background-color: #ffdda6;
   
 }
+
+
 
 
 /* Colores
